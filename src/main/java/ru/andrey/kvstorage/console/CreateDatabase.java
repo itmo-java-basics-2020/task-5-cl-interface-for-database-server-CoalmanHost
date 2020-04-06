@@ -1,11 +1,7 @@
 package ru.andrey.kvstorage.console;
 
-import ru.andrey.kvstorage.DatabaseServer;
 import ru.andrey.kvstorage.exception.DatabaseException;
-import ru.andrey.kvstorage.logic.Database;
 import ru.andrey.kvstorage.logic.DatabaseExample;
-
-import java.util.Optional;
 
 public class CreateDatabase implements DatabaseCommand {
 
@@ -19,11 +15,9 @@ public class CreateDatabase implements DatabaseCommand {
     }
 
     @Override
-    public DatabaseCommandResult execute() throws DatabaseException {
+    public DatabaseCommandResult execute() {
 
-        DatabaseCommandResult.DatabaseCommandStatus status;
-
-        if (!env.getDatabase(dbName).isEmpty()) {
+        if (env.getDatabase(dbName).isPresent()) {
             return DatabaseCommandResult.error("Database "+dbName+" already exists");
         }
         env.addDatabase(new DatabaseExample(dbName));
